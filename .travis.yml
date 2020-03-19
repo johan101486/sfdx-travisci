@@ -6,6 +6,9 @@ env:
 - URL=https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-amd64.tar.xz
 
 before_install:
+- export CONSUMER_KEY=3MVG9vtcvGoeH2bg.7ebgFxfzFqnKTC.sgMTOcs82M_5aPR9TTD96BjVsOGgxGdVS32_HQtlwQFN9TyvOhZK1
+- export JWT_KEY_FILE=E:\Dev Workspace\sfdx\sfdx-travisci\assets\server.key.enc
+- export HUB_USERNAME=johan1014@resourceful-moose-vbhm1.com
 - export SFDX_AUTOUPDATE_DISABLE=false
 - export SFDX_USE_GENERIC_UNIX_KEYCHAIN=true
 - export SFDX_DOMAIN_RETRY=300
@@ -17,8 +20,7 @@ before_install:
 - export PATH=./sfdx/$(pwd):$PATH
 - sfdx --version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key.enc --username $USERNAME --setdefaultdevhubusername -a HubOrg
-
+- sfdx force:auth:jwt:grant --clientid ${CONSUMER_KEY} --username ${HUB_USERNAME} --jwtkeyfile ${JWT_KEY_FILE} --setdefaultdevhubusername
 script:
 - sfdx force:org:create -v HubOrg -s -f config/project-scratch-def.json -a ciorg --wait 2
 - sfdx force:org:display -u ciorg
